@@ -16,8 +16,12 @@ $runtimeDefaults = [
 ];
 
 foreach ($runtimeDefaults as $key => $value) {
-    if (getenv($key) === false && ! array_key_exists($key, $_ENV) && ! array_key_exists($key, $_SERVER)) {
+    $configuredValue = $_ENV[$key] ?? $_SERVER[$key] ?? getenv($key);
+
+    if ($configuredValue === false || $configuredValue === null || $configuredValue === '') {
         $_ENV[$key] = $value;
+        $_SERVER[$key] = $value;
+        putenv($key.'='.$value);
     }
 }
 
