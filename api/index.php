@@ -10,7 +10,7 @@ $_ENV['APP_SERVICES_CACHE'] ??= '/tmp/services.php';
 $_ENV['VIEW_COMPILED_PATH'] ??= '/tmp/views';
 
 foreach ($_ENV as $key => $value) {
-    if (str_starts_with($key, 'APP_') || $key === 'VIEW_COMPILED_PATH') {
+    if (is_scalar($value)) {
         putenv($key.'='.$value);
     }
 }
