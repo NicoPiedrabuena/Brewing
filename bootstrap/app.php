@@ -14,5 +14,7 @@ return Application::configure(basePath: dirname(__DIR__))
         //
     })
     ->withExceptions(function (Exceptions $exceptions): void {
-        //
+        $exceptions->report(function (\Throwable $exception): void {
+            error_log('Laravel exception: '.$exception::class.': '.$exception->getMessage());
+        });
     })->create();
